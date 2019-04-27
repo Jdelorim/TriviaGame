@@ -32,3 +32,29 @@ body, html {
       padding-top:30px;
       opacity: 0.9;
   }
+  .jTimer{
+      text-align:center;
+      color: rgba(255,0,0,0.9);      
+      opacity: 0.5;
+      padding-top:20px;
+      padding-bottom:40px;
+  }
+  .jbody{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-right: 200px;
+    margin-left:200px;
+    padding-bottom: 600px;
+    background-color: rgba(255,255,255,0.3);
+    box-shadow: 3px 3px 20px grey;
+
+  }
+  .questions{
+    margin-top:100px;
+  }
+  .answers{
+      padding-top:100px;
+  }
