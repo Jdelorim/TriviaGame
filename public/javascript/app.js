@@ -1,3 +1,4 @@
+"use strict";
 document.addEventListener("DOMContentLoaded", function(){
 
 console.log("hello");
@@ -16,7 +17,7 @@ var qTitle = document.getElementById("qT");
 var qMain = document.getElementById("qMain");
 var Qnext = document.getElementById("nQ");
 var pScore = document.getElementById("pScore");
-
+var lastQ = false;
 welcome();
 
 function welcome(){
@@ -37,7 +38,7 @@ function mainTimer(){
      document.getElementById("p1").innerHTML = countdownString + time;
      Qnext.style.display = "none";
      if(time <= 0){
-        console.log("im here");
+        
         timeUp = true;
         loser();
      }
@@ -48,28 +49,42 @@ function loser(){
      console.log("u loose");
      if(timeUp === true){
      qMain.style.display = "none";
-     qTitle.innerHTML = "<h1>Time Up!<h1>"; 
+     qTitle.innerHTML = "<h1>Time Up!<h1>";
+     timeUp = false; 
     } else {
      qMain.style.display = "none";
      qTitle.innerHTML = "<h1>Wrong Answer!<h1>";
+     timeUp = false;
     }
     showTF(false);
-     Qnext.style.display = "inline";
-     Qnext.addEventListener("click",nextQ);
+    Qnext.style.display = "inline";
+    if(lastQ === false){
+    
+    Qnext.addEventListener("click", nextQ);
+    } else {
+    Qnext.innerText = "See Final Score";
+    Qnext.addEventListener("click", finalScore);  
+    }
 };
 function winner(){
      clearInterval(timer);
+     timeUp = false;
      
-     console.log("win");
      playerScore+=10;
+
      showTF(false);
      pScore.innerHTML = `<b>${pScoreString}${playerScore}/100</b>`;
      console.log(`player score: ${playerScore}`);
      qMain.style.display = "none";
      qTitle.innerHTML = `<h1>Correct Answer<h1>`;
-     
      Qnext.style.display = "inline";
-     Qnext.addEventListener("click", nextQ);
+     
+     if(lastQ === false){
+        Qnext.addEventListener("click", nextQ);
+     } else {
+       Qnext.innerText = "See Final Score";
+       Qnext.addEventListener("click", finalScore);  
+     }
 }
 function showTF(toggleTF){
      if(toggleTF === true){
@@ -81,15 +96,15 @@ function showTF(toggleTF){
     }
 }
 function nextQ(){
-    console.log(`in the next q`);
-    
     ++q;
     console.log(`Q: ${q}`);
     Qnext.style.display = "none";
     start();
 }
-function one(){
-    console.log("this is the answer");
+function finalScore(){
+    console.log("final score");
+
+
 }
 function t(){
     switch(q){
@@ -108,6 +123,23 @@ function t(){
         case 4:
         winner();
         break;
+        case 5:
+        loser();
+        break;
+        case 6:
+        winner();
+        break;
+        case 7:
+        winner();
+        break;
+        case 8:
+        loser();
+        break;
+        case 9:
+        
+        winner();
+        break;
+
       
         
     }
@@ -130,6 +162,22 @@ function f(){
         case 4:
         loser();
         break;
+        case 5:
+        winner();
+        break;
+        case 6:
+        loser();
+        break;
+        case 7:
+        loser();
+        break;
+        case 8:
+        winner();
+        break;
+        case 9:
+        
+        loser();
+        break;
      
         
     }
@@ -142,46 +190,93 @@ function questionHolder(q){
          qTitle.style.display = "block";
          qMain.style.display = "block";
          qTitle.innerText = "Question 1";
-         qMain.innerText = `Kermit the frog said: "it's not easy being blue"`;
+         qMain.innerText = `Kermit the frog said: "it's not easy being blue".`;
          tButton.addEventListener("click",t, false);
          fbutton.addEventListener("click",f, false);
         break;
         case 1:
-        qTitle.style.display = "block";
-        qMain.style.display = "block";
-        qTitle.innerText = "Question 2";
-        qMain.innerText = `"The Rainbow Connection" is the first song sung in the 1979 original Muppet Movie`;
-        showTF(true);
-        tButton.addEventListener("click",t, false);
-        fbutton.addEventListener("click",f, false);
+         qTitle.style.display = "block";
+         qMain.style.display = "block";
+         qTitle.innerText = "Question 2";
+         qMain.innerText = `"The Rainbow Connection" is the first song sung in the 1979 original Muppet Movie.`;
+         showTF(true);
+         tButton.addEventListener("click",t, false);
+         fbutton.addEventListener("click",f, false);
         break;
         case 2:
         qTitle.style.display = "block";
-        qMain.style.display = "block";
-        qTitle.innerText = "Question 3";
-        qMain.innerText = `The "El Sleezo Cafe" is the name of the bar where Kermit meets Fozzie the Bear`;
-        showTF(true);
-        tButton.addEventListener("click",t, false);
-        fbutton.addEventListener("click",f, false);
+         qMain.style.display = "block";
+         qTitle.innerText = "Question 3";
+         qMain.innerText = `The "El Sleezo Cafe" is the name of the bar where Kermit meets Fozzie the Bear.`;
+         showTF(true);
+         tButton.addEventListener("click",t, false);
+         fbutton.addEventListener("click",f, false);
         break; 
         case 3:
-        qTitle.style.display = "block";
-        qMain.style.display = "block";
-        qTitle.innerText = "Question 4";
-        qMain.innerText = `Dr. Tooth and The Electric Mayhem is the name of the band Fozzie and Kermit encounter in a church`;
-        showTF(true);
-        tButton.addEventListener("click",t, false);
-        fbutton.addEventListener("click",f, false);
+         qTitle.style.display = "block";
+         qMain.style.display = "block";
+         qTitle.innerText = "Question 4";
+         qMain.innerText = `Dr. Tooth and The Electric Mayhem is the name of the band Fozzie and Kermit encounter in a church.`;
+         showTF(true);
+         tButton.addEventListener("click",t, false);
+         fbutton.addEventListener("click",f, false);
         break;
         case 4:
-        qTitle.style.display = "block";
-        qMain.style.display = "block";
-        qTitle.innerText = "Question 5";
-        qMain.innerText = `Ms. Piggy is the name of the love interest for Kermit the Frog`;
-        showTF(true);
-        tButton.addEventListener("click",t, false);
-        fbutton.addEventListener("click",f, false);
-        break;   
+         qTitle.style.display = "block";
+         qMain.style.display = "block";
+         qTitle.innerText = "Question 5";
+         qMain.innerText = `Ms. Piggy is the name of the love interest for Kermit the Frog.`;
+         showTF(true);
+         tButton.addEventListener("click",t, false);
+         fbutton.addEventListener("click",f, false);
+        break; 
+        case 5:
+         qTitle.style.display = "block";
+         qMain.style.display = "block";
+         qTitle.innerText = "Question 6";
+         qMain.innerText = `Rowlf the Dog plays the Saxophone.`;
+         showTF(true);
+         tButton.addEventListener("click",t, false);
+         fbutton.addEventListener("click",f, false);
+        break;
+        case 6:
+         qTitle.style.display = "block";
+         qMain.style.display = "block";
+         qTitle.innerText = "Question 7";
+         qMain.innerText = `Hare Krishna is referenced more than once in the film.`;
+         showTF(true);
+         tButton.addEventListener("click",t, false);
+         fbutton.addEventListener("click",f, false);
+        break;
+        case 7:
+         qTitle.style.display = "block";
+         qMain.style.display = "block";
+         qTitle.innerText = "Question 8";
+         qMain.innerText = `Dr. Bunsen Honeydew's assist is named Beaker.`;
+         showTF(true);
+         tButton.addEventListener("click",t, false);
+         fbutton.addEventListener("click",f, false);
+        break; 
+        case 8:
+         qTitle.style.display = "block";
+         qMain.style.display = "block";
+         qTitle.innerText = "Question 9";
+         qMain.innerText = `Gonzo sings the song "I'm going to go back there tomorrow" after there vechile breaks down.`;
+         showTF(true);
+         tButton.addEventListener("click",t, false);
+         fbutton.addEventListener("click",f, false);
+        break;
+        case 9:
+         qTitle.style.display = "block";
+         qMain.style.display = "block";
+         qTitle.innerText = "Question 10";
+         qMain.innerText = `Statler and Waldorf are the two hecklers in The Muppet Movie.`;
+         lastQ = true;
+         showTF(true);
+         tButton.addEventListener("click",t, false);
+         fbutton.addEventListener("click",f, false); 
+         
+        break; 
     }
 };
 
