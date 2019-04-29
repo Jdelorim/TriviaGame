@@ -35,9 +35,9 @@ function start(){
          q = 0;
          playerScore = 0;
          pScore.innerHTML = `<b>${pScoreString}${playerScore}/100</b>`
-         refresh = false;
          showTF(true);
-         console.log("in refresh");
+         lastQ = false;
+         refresh = false;
     }
      startButton.style.display = "none";
      time = 11;
