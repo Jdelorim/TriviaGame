@@ -3,13 +3,13 @@ body, html {
   }
   
   .bg { 
-    /* The image used */
+   
     background-image: url("../images/muppets2.png");
   
-    /* Full height */
+    
     height: 100%; 
   
-    /* Center and scale the image nicely */
+    
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -23,8 +23,13 @@ body, html {
   .jTitle{
      position: absolute;
      top:0;
-     left:35%;
+     left:33%;
      padding-bottom:10px;
+  }
+  #Titletext{
+    text-align: center;
+    color: rgba(241, 90, 34, 1);
+    text-shadow: 3px 3px 20px grey;
   }
   h1{
       text-align: center;
@@ -34,7 +39,7 @@ body, html {
   }
   .jTimer{
       text-align:center;
-      color: rgba(255,0,0,0.9);      
+      color: rgba(19, 19, 18, 0.95);      
       opacity: 0.5;
       padding-top:20px;
       padding-bottom:40px;
@@ -57,4 +62,13 @@ body, html {
   }
   .answers{
       padding-top:100px;
+  }
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;
   }

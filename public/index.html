@@ -13,14 +13,16 @@
     <div class="bg">
         <div class="navbar">
           <div class="jTitle">
-             <h1><b>Muppets Trivia Game</b></h1>
+             <h1 id="Titletext"><b>The Muppets Trivia Game</b></h1>
           </div>
         </div>
         <div class="jTimer">
             <div id="p1">
-                 You will have 30 seconds to complete each question.   
+                 <span><b>You will have 10 seconds to complete each question.</b></span>  
             </div>
-            
+            <div id="pScore">
+                </span><b> Player Score: 0/100</b></span>
+            </div>
         </div>
         <div class ="jbody">
             <div class="bodyTitle">
@@ -35,13 +37,16 @@
                 <p id="qMain"></p>
             </div>
             <div class="answers">
-                <button id="tr">TRUE</button>
-                <button id="fl">FALSE</button>
+                <button type="button" id="tr">TRUE</button>
+                <button type="button" id="fl">FALSE</button>
             </div>
             <div class="nextQ">
                 <button id="nQ">Next Question</button>
             </div>
           </div>
+        </div>
+        <div class="footer">
+            <p>Footer</p>
         </div>
     </div>
   
