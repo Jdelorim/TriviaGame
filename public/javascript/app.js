@@ -9,7 +9,6 @@ var pScoreString = "Player Score:  "
 var playerScore = 0;
 var q = 0;
 var timeUp = false;
-
 var startButton = document.getElementById("start");
 var tButton = document.getElementById("tr");
 var fbutton = document.getElementById("fl");
@@ -18,6 +17,7 @@ var qMain = document.getElementById("qMain");
 var Qnext = document.getElementById("nQ");
 var pScore = document.getElementById("pScore");
 var lastQ = false;
+var refresh = false;
 welcome();
 
 function welcome(){
@@ -26,6 +26,19 @@ function welcome(){
 };
 function start(){
      console.log('in start');
+     if(refresh === true){
+         console.log("in refresh");
+         Qnext.innerText = "Next Question";
+         Qnext.style.display = "none";
+         Qnext.removeEventListener("click", start);
+         Qnext.addEventListener("click", nextQ);
+         q = 0;
+         playerScore = 0;
+         pScore.innerHTML = `<b>${pScoreString}${playerScore}/100</b>`
+         refresh = false;
+         showTF(true);
+         console.log("in refresh");
+    }
      startButton.style.display = "none";
      time = 11;
      timer = setInterval(mainTimer, 1000);
@@ -63,15 +76,14 @@ function loser(){
     Qnext.addEventListener("click", nextQ);
     } else {
     Qnext.innerText = "See Final Score";
+    Qnext.removeEventListener("click", nextQ);
     Qnext.addEventListener("click", finalScore);  
     }
 };
 function winner(){
      clearInterval(timer);
      timeUp = false;
-     
      playerScore+=10;
-
      showTF(false);
      pScore.innerHTML = `<b>${pScoreString}${playerScore}/100</b>`;
      console.log(`player score: ${playerScore}`);
@@ -83,6 +95,7 @@ function winner(){
         Qnext.addEventListener("click", nextQ);
      } else {
        Qnext.innerText = "See Final Score";
+       Qnext.removeEventListener("click", nextQ);
        Qnext.addEventListener("click", finalScore);  
      }
 }
@@ -103,9 +116,23 @@ function nextQ(){
 }
 function finalScore(){
     console.log("final score");
-
-
+    refresh = true;
+    Qnext.innerText = "Play again!";
+    Qnext.removeEventListener("click", finalScore);
+    Qnext.addEventListener("click", start);
+    if(playerScore === 100){
+        qTitle.innerHTML = `<h1>Perfect Score!<h1>`; 
+    } else if(playerScore >= 90){
+        qTitle.innerHTML = `<h1>You only Missed One Good Job!<h1>`;
+    }else if(playerScore >= 80){
+        qTitle.innerHTML = `<h1>You have average knowledge of The Muppets!<h1>`;
+    }else if(playerScore >= 70){
+        qTitle.innerHTML = `<h1>Well you could have done worse!<h1>`;
+    } else {
+        qTitle.innerHTML = `<h1>You really should try again!<h1>`;
+    }
 }
+
 function t(){
     switch(q){
         case 0: 
@@ -136,15 +163,11 @@ function t(){
         loser();
         break;
         case 9:
-        
         winner();
         break;
-
-      
-        
     }
-
 }
+
 function f(){
     switch(q){
         case 0: 
@@ -175,13 +198,9 @@ function f(){
         winner();
         break;
         case 9:
-        
         loser();
         break;
-     
-        
-    }
-
+     }
 }
 
 function questionHolder(q){
