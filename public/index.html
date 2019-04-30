@@ -6,8 +6,6 @@
         <title>Muppets Trivia Game</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
-
-
     </head>
     <body>
     <div class="bg">
@@ -30,6 +28,10 @@
             </div>
             <div class ="welcome">
                 <button id="start">Start Game</button>
+                <form action="/usersdb" method="post">
+                <input type="text" name="username" placeholder="enter username">
+                <input type="submit">
+                </form>
             </div>
             <div id="triva">
             <div class="questions">

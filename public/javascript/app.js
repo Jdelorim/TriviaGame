@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", function(){
 console.log("hello");
 var time;
 var timer;
-var countdownString = "TIME LEFT:   "
-var pScoreString = "Player Score:  "
+var countdownString = "TIME LEFT:  ";
+var pScoreString = "Player Score:  ";
 var playerScore = 0;
 var q = 0;
 var timeUp = false;
@@ -72,7 +72,6 @@ function loser(){
     showTF(false);
     Qnext.style.display = "inline";
     if(lastQ === false){
-    
     Qnext.addEventListener("click", nextQ);
     } else {
     Qnext.innerText = "See Final Score";
@@ -116,6 +115,7 @@ function nextQ(){
 }
 function finalScore(){
     console.log("final score");
+    showTF(false);
     refresh = true;
     Qnext.innerText = "Play again!";
     Qnext.removeEventListener("click", finalScore);
