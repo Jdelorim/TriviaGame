@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const db = require("./models");
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/muppetsDB'; 
 
-
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
 
@@ -24,15 +23,17 @@ mongoose.connect('mongodb://localhost/muppetsDB', function (err) {
    console.log('Successfully connected');
  
 });
+/////////////////////////
 app.get('*', function(req, res){
-    res.sendFile('index.html');
+    res.sendFile(__dirname+'index.html');
   });
 app.post('/usersdb', function(req, res) {
-    console.log("fsfdsfsf"+req.body.username);
+    console.log("FROM FRONT:"+req.body.username);
     var info = {
         username: req.body.username,
-        highscore: "0"
+        highscore: req.body.highscore
     }
+    
     db.Users.create(info)
         .then(function(muppetsDB){
             res.json(muppetsDB);
@@ -40,8 +41,18 @@ app.post('/usersdb', function(req, res) {
         .catch(function(err){
             res.json(err);
         });
+    
 });
-
+// app.get('/add', function(req,res){
+//     db.Users.findOneAndUpdate()
+//         .then(function(muppetsDB){
+//             res.json(muppetsDB);
+//         })
+//         .catch(function(err){
+//             res.json(err);
+//         })
+// });
+/////////////////////////////
 app.listen(PORT, listening);
     function listening(){
         console.log(`your on PORT: ${PORT}`);

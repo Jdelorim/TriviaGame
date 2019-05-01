@@ -16,9 +16,35 @@ var qTitle = document.getElementById("qT");
 var qMain = document.getElementById("qMain");
 var Qnext = document.getElementById("nQ");
 var pScore = document.getElementById("pScore");
+var userNameBtn = document.getElementById('userNameBtn');
 var lastQ = false;
 var refresh = false;
+
+
+$('#userNameBtn').on('click', function (){
+        console.log('its working');
+        var v = $('#uName').val();
+        playerScore = 50;
+        console.log(v);
+        $.ajax({
+            method: "POST",
+            url: "/usersdb",
+            data: {
+                username: v,
+                highscore: playerScore.toString()
+            }
+        })
+        .catch(function(err){
+            console.log(err);
+        })
+    });
+
+
+
+
 welcome();
+
+
 
 function welcome(){
      document.getElementById("triva").style.display = "none";

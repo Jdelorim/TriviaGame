@@ -14,8 +14,6 @@ var Userschema = new Schema({
         default: "0",
         required: true 
     }
-
-
 });
 
 var Users = mongoose.model("Users", Userschema);
