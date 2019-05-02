@@ -11,7 +11,9 @@
         crossorigin="anonymous"></script>
     </head>
     <body>
+    
     <div class="bg">
+        <button id="add"><a href="/clearDB">clear</a></button>
         <div class="navbar">
           <div class="jTitle">
              <h1 id="Titletext"><b>The Muppets Trivia Game</b></h1>
@@ -24,6 +26,12 @@
             <div id="pScore">
                 </span><b> Player Score: 0/100</b></span>
             </div>
+            <div id="pName">
+                </span><b> </b></span>
+            </div>
+            <div id="pHighScore">
+                </span><b> </b></span>
+            </div>
         </div>
         <div class ="jbody">
             <div class="bodyTitle">
@@ -33,7 +41,7 @@
                 <button id="start">Start Game</button>
                 <form>
                 <input id="uName" type="text" name="username" placeholder="enter username">
-                <input id="userNameBtn" type="button">
+                <input id="userNameBtn" type="button" value="enter">
                 </form>
             </div>
             <div id="triva">

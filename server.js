@@ -15,43 +15,127 @@ app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
 
 app.use(express.static("public"));
-// mongoose.connect('mongodb://localhost/muppetsDB',{useNewUrlParser: true});
-mongoose.connect('mongodb://localhost/muppetsDB', function (err) {
- 
-   if (err) throw err;
- 
-   console.log('Successfully connected');
- 
-});
+
 /////////////////////////
-app.get('*', function(req, res){
+var info = {
+    username: '',
+    highscore: 0
+};
+
+app.get('/', function(req, res){
     res.sendFile(__dirname+'index.html');
-  });
-app.post('/usersdb', function(req, res) {
-    console.log("FROM FRONT:"+req.body.username);
-    var info = {
-        username: req.body.username,
-        highscore: req.body.highscore
-    }
-    
-    db.Users.create(info)
-        .then(function(muppetsDB){
-            res.json(muppetsDB);
-        })
-        .catch(function(err){
-            res.json(err);
-        });
-    
 });
-// app.get('/add', function(req,res){
-//     db.Users.findOneAndUpdate()
+
+app.post('/usersdb',function(req,res) {
+       info = {
+          username: req.body.username,
+          highscore: req.body.highscore
+      }
+      db.Users.create(info)
+      .then(function(info){
+        res.json(info);
+      }).catch(function(err){
+        res.json(err);
+    })
+  })
+// app.post('/usersdb', function(req,res) {
+//     var info = {
+//         username: req.body.username,
+//         highscore: req.body.highscore
+//     }
+//    res.send("fdfdfd"+req.body.username);
+//         db.Users.findOne({username: info.username}, function(err,data){
+//             console.log('found it');
+//             return;
+//         }).then(function(data){
+//             console.log('in data');
+//             db.Users.create(data)
+//                 .then(function(data){
+//                     res.json(data);
+//                 })
+//                 .catch(function(err){
+//                     res.json(err);
+//                 })
+//         })
+//     })
+
+    
+//     db.Users.create(info)
 //         .then(function(muppetsDB){
 //             res.json(muppetsDB);
+//         })
+//         .then(function(muppetsDB){
+         
+
+
 //         })
 //         .catch(function(err){
 //             res.json(err);
 //         })
 // });
+//send to the front
+// app.get('/api/usersdb', function(req,res) {
+//     res.send('hello');
+//     db.Users.findOne({username: muppetsDB.username}, function(err,data){
+//         console.log('found it');
+//     })
+// })
+// app.get('/api/usersdb', function(req,res) {
+//     res.send('hello');
+//     db.Users.findOne({username: info.username}, function(err,data){
+//         console.log('found it');
+//     });
+// });
+
+// app.post('/usersdb', function(req, res) {
+//     console.log("FROM FRONT:"+req.body.username);
+//      info = {
+//         username: req.body.username,
+//         highscore: req.body.highscore
+//     }
+
+//     db.Users.create(info)
+//         .then(function(muppetsDB){
+//             console.log("info: "+muppetsDB.username);
+            
+//             db.Users.findOne({username: muppetsDB.username}, function(err,info){
+//                 console.log('its a match', info);
+//             })
+//             db.Users.find({}, function(err, muppetsDB) {
+//                     if (!err){ 
+//                         console.log(muppetsDB);
+//                         return;
+//                     } else {throw err};
+//                 });
+                
+//         }).then(function(muppetsDB){
+//             // res.json(muppetsDB);
+//         })
+//         .catch(function(err){
+//             res.json(err);
+//         });
+// });
+
+app.post('/updateScore', function(req,res) {
+    console.log('highscore: '+req.body.highscore);
+    console.log('uname:', info.username);
+    db.Users.findOneAndUpdate({username: info.username},{$set:{highscore: req.body.highscore}},{new: true},(err,doc)=>{
+                if(!err){
+                    console.log(doc);
+                } else {
+                    console.log(err);
+                }
+            })
+        res.redirect('/');
+})
+
+app.get('/clearDB', function(req,res){
+    //use deleteMany instead of remove
+    db.Users.deleteMany({}).then (function(){
+        res.redirect('/');
+    });
+});
+
 /////////////////////////////
 app.listen(PORT, listening);
     function listening(){

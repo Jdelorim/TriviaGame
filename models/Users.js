@@ -1,17 +1,21 @@
-var mongoose = require("mongoose");
+
+var mongoose = require('mongoose');
+//keep connect code here to avoid deprecation err
+mongoose.connect('mongodb://localhost:27017/muppetsDB', { useNewUrlParser: true });
 var Schema = mongoose.Schema;
 
 var Userschema = new Schema({
     username: {
         type: String,
+        unique: true,
         trim: true,
         default: "",
         required: true
     },
     highscore: {
-        type: String,
+        type: Number,
         trim: true,
-        default: "0",
+        default: 0,
         required: true 
     }
 });
