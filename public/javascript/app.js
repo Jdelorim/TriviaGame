@@ -24,30 +24,37 @@ var refresh = false;
 var lastScore = 0;
 var uname;
 
-$('#userNameBtn').on('click', function (){
-        console.log('its working');
-        uname = $('#uName').val();
-        $.ajax({
-            method: "POST",
-            url: "/usersdb",
-            data: {
-                username: uname,
-                highscore: playerScore
-            }
-        }).then(function(data){
-            console.log('name: ', data.username);
-        })
-        .catch(function(err){
-            console.log(err);
-        })
-});
-// $.get('/api/usersdb', function(data){
-//     console.log('data: ', data);
-// })
-welcome();
 
+
+
+$('#userNameBtn').on('click', function (){
+    uname = $('#uName').val();
+    $.ajax({
+        method: "POST",
+        url: "/usersdb",
+        data: {
+            username: uname,
+            highscore: playerScore
+        }
+    }).then(function(){
+        $.get('/api/usersdb', function(data){
+            console.log('data: ', data);
+            if(data === true){
+               alert('Username already taken please choose another!')
+            } else {
+                pName.innerHTML = `<h2><b>Welcome: ${uname}!</b></h2>`;
+                document.getElementById('userInput').style.display = 'none';
+               welcome();
+            }
+        })
+    })
+})
+
+welcome();
+startButton.style.display = 'none';
 function welcome(){
      document.getElementById("triva").style.display = "none";
+     startButton.style.display = 'block';
      startButton.addEventListener("click", start);
 };
 
@@ -160,16 +167,16 @@ function finalScore(){
         qTitle.innerHTML = `<h1>You really should try again!<h1>`;
     }
     ///
-    if(playerScore >= lastScore){
+if(playerScore >= lastScore){
     $.ajax({
         method: "POST",
         url: "/updateScore",
         data: {
-            
             highscore: playerScore
         }
     }).then(function(){
         lastScore = playerScore;
+        pHScore.innerHTML = `<h3><b>Your High Score is: ${lastScore}</b></h3>`;
     })
     .catch(function(err){
         console.log(err);

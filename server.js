@@ -21,100 +21,59 @@ var info = {
     username: '',
     highscore: 0
 };
+var createNew = false;
 
 app.get('/', function(req, res){
     res.sendFile(__dirname+'index.html');
 });
 
-app.post('/usersdb',function(req,res) {
-       info = {
-          username: req.body.username,
-          highscore: req.body.highscore
-      }
-      db.Users.create(info)
-      .then(function(info){
-        res.json(info);
-      }).catch(function(err){
-        res.json(err);
-    })
-  })
-// app.post('/usersdb', function(req,res) {
-//     var info = {
-//         username: req.body.username,
-//         highscore: req.body.highscore
-//     }
-//    res.send("fdfdfd"+req.body.username);
-//         db.Users.findOne({username: info.username}, function(err,data){
-//             console.log('found it');
-//             return;
-//         }).then(function(data){
-//             console.log('in data');
-//             db.Users.create(data)
-//                 .then(function(data){
-//                     res.json(data);
-//                 })
-//                 .catch(function(err){
-//                     res.json(err);
-//                 })
-//         })
-//     })
-
+app.post('/usersdb', function(req, res) {
+    console.log('username:: ', req.body.username);
+    info = {
+        username: req.body.username,
+        highscore: req.body.highscore
+    }
     
-//     db.Users.create(info)
-//         .then(function(muppetsDB){
-//             res.json(muppetsDB);
-//         })
-//         .then(function(muppetsDB){
-         
+    db.Users.findOne({username: info.username}, function(err,data){
+        
+            if(data == null) {
 
-
-//         })
-//         .catch(function(err){
-//             res.json(err);
-//         })
-// });
-//send to the front
-// app.get('/api/usersdb', function(req,res) {
-//     res.send('hello');
-//     db.Users.findOne({username: muppetsDB.username}, function(err,data){
-//         console.log('found it');
-//     })
-// })
-// app.get('/api/usersdb', function(req,res) {
-//     res.send('hello');
-//     db.Users.findOne({username: info.username}, function(err,data){
-//         console.log('found it');
-//     });
-// });
-
-// app.post('/usersdb', function(req, res) {
-//     console.log("FROM FRONT:"+req.body.username);
-//      info = {
-//         username: req.body.username,
-//         highscore: req.body.highscore
-//     }
-
-//     db.Users.create(info)
-//         .then(function(muppetsDB){
-//             console.log("info: "+muppetsDB.username);
-            
-//             db.Users.findOne({username: muppetsDB.username}, function(err,info){
-//                 console.log('its a match', info);
-//             })
-//             db.Users.find({}, function(err, muppetsDB) {
-//                     if (!err){ 
-//                         console.log(muppetsDB);
-//                         return;
-//                     } else {throw err};
-//                 });
+                console.log('this is the data:::', data);
+                console.log('this should create new entry', info);
+    
+                db.Users.create(info)
+                    .then(function(info){
+                    res.json(info);
+                    createNew = true;
+                    sendMe();
+                    }).catch(function(err){
+                    res.json(err);
+                    console.log('fdfdsf');
+                  });
+            } else {
+                //send back to the front
+                console.log('already taken');
+                console.log(data.highscore);
                 
-//         }).then(function(muppetsDB){
-//             // res.json(muppetsDB);
-//         })
-//         .catch(function(err){
-//             res.json(err);
-//         });
-// });
+            }
+        })
+    })
+
+function sendMe(){
+    app.get('/api/usersdb',function(req,res) {
+        
+        if(createNew === true){
+            res.send(false);
+        } else {
+            res.send(true);
+        }
+        
+    })
+}
+
+
+
+
 
 app.post('/updateScore', function(req,res) {
     console.log('highscore: '+req.body.highscore);
