@@ -7,8 +7,10 @@ module.exports = function(app) {
     var createNew = false;
     
     app.get('/', function(req, res){
-        res.sendFile(__dirname+'index.html');
+         res.sendFile(__dirname+'index.html');
+       
     });
+  
     
     app.post('/usersdb', function(req, res) {
         console.log('username:: ', req.body.username);
@@ -53,11 +55,6 @@ module.exports = function(app) {
             
         })
     }
-    
-    
-    
-    
-    
     app.post('/updateScore', function(req,res) {
         console.log('highscore: '+req.body.highscore);
         console.log('uname:', info.username);

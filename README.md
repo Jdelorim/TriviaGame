@@ -1,6 +1,6 @@
 # TriviaGame
 
-Muppets themed trivia game as a front end vanilla javascript exercise.
+Muppets themed trivia game as a mostly front end vanilla javascript exercise. It features a database to keep track of your high score.
 
 Authors: Joshua deLorimier
 https://www.joshuadelorimier.com
@@ -10,7 +10,6 @@ https://muppetstrivia.herokuapp.com/
 
 
 ToDo:
-- add player username and mongoDB database for highscores.
 - add sound and images per question
 - randomize questions on repeated play throughs.
-- clean up css and add animated GIF for winning, losing and final score screens.
+- clean up css and add velocity.js.
