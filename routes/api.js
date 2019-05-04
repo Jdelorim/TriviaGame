@@ -10,8 +10,6 @@ module.exports = function(app) {
          res.sendFile(__dirname+'index.html');
        
     });
-  
-    
     app.post('/usersdb', function(req, res) {
         console.log('username:: ', req.body.username);
         info = {

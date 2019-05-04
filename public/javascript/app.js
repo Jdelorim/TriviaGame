@@ -2,33 +2,30 @@
 
 document.addEventListener("DOMContentLoaded", function(){
 
+let time = 0;
+let timer;
+const countdownString = "TIME LEFT:  ";
+const pScoreString = "Player Score:  ";
+let playerScore = 0;
+let q = 0;
+let timeUp = false;
+const startButton = document.getElementById("start");
+const tButton = document.getElementById("tr");
+const fbutton = document.getElementById("fl");
+const qTitle = document.getElementById("qT");
+const qMain = document.getElementById("qMain");
+const Qnext = document.getElementById("nQ");
+const pScore = document.getElementById("pScore");
+const pName = document.getElementById('pName');
+const pHScore = document.getElementById('pHighScore');
+let lastQ = false;
+let refresh = false;
+let lastScore = 0;
+let uname;
 
-var time;
-var timer;
-var countdownString = "TIME LEFT:  ";
-var pScoreString = "Player Score:  ";
-var playerScore = 0;
-var q = 0;
-var timeUp = false;
-var startButton = document.getElementById("start");
-var tButton = document.getElementById("tr");
-var fbutton = document.getElementById("fl");
-var qTitle = document.getElementById("qT");
-var qMain = document.getElementById("qMain");
-var Qnext = document.getElementById("nQ");
-var pScore = document.getElementById("pScore");
-var pName = document.getElementById('pName');
-var pHScore = document.getElementById('pHighScore');
-var lastQ = false;
-var refresh = false;
-var lastScore = 0;
-var uname;
-
-
-
-
-$('#userNameBtn').on('click', function (){
+$('#userNameBtn').on('click',  ()=>{
     uname = $('#uName').val();
+    
     $.ajax({
         method: "POST",
         url: "/usersdb",
@@ -36,8 +33,8 @@ $('#userNameBtn').on('click', function (){
             username: uname,
             highscore: playerScore
         }
-    }).then(function(){
-        $.get('/api/usersdb', function(data){
+    }).then(()=>{
+        $.get('/api/usersdb', (data)=>{
             console.log('data: ', data);
             if(data === true){
                alert('Username already taken please choose another!')
@@ -50,13 +47,18 @@ $('#userNameBtn').on('click', function (){
     })
 })
 
-welcome();
-startButton.style.display = 'none';
-function welcome(){
-     document.getElementById("triva").style.display = "none";
+
+const setup=()=>{
+    startButton.style.display = 'none';
+    document.getElementById("triva").style.display = "none";
+}
+
+setup();
+
+const welcome=()=>{
      startButton.style.display = 'block';
      startButton.addEventListener("click", start);
-};
+}
 
 function start(){
     console.log('lastScore  ' ,lastScore);
@@ -78,9 +80,8 @@ function start(){
      startButton.style.display = "none";
      time = 11;
      timer = setInterval(mainTimer, 1000);
-};
-
-function mainTimer(){
+}
+const mainTimer=()=>{
      time -= 1;
      questionHolder(q);
      document.getElementById("triva").style.display = "block";
@@ -90,9 +91,8 @@ function mainTimer(){
         timeUp = true;
         loser();
      }
-};
-
-function loser(){
+}
+const loser=()=>{
      clearInterval(timer);
      console.log("u loose");
      if(timeUp === true){
@@ -114,7 +114,7 @@ function loser(){
     Qnext.addEventListener("click", finalScore);  
     }
 };
-function winner(){
+const winner=()=>{
      clearInterval(timer);
      timeUp = false;
      playerScore+=10;
@@ -132,8 +132,8 @@ function winner(){
        Qnext.removeEventListener("click", nextQ);
        Qnext.addEventListener("click", finalScore);  
      }
-};
-function showTF(toggleTF){
+}
+const showTF=(toggleTF)=>{
      if(toggleTF === true){
      tButton.style.display = "inline";
      fbutton.style.display = "inline";
@@ -141,14 +141,14 @@ function showTF(toggleTF){
       tButton.style.display = "none";
       fbutton.style.display = "none";  
     }
-};
-function nextQ(){
+}
+const nextQ=()=>{
     ++q;
     console.log(`Q: ${q}`);
     Qnext.style.display = "none";
     start();
-};
-function finalScore(){
+}
+const finalScore=()=>{
     console.log("final score");
     showTF(false);
     refresh = true;
@@ -166,7 +166,7 @@ function finalScore(){
     } else {
         qTitle.innerHTML = `<h1>You really should try again!<h1>`;
     }
-    ///
+    
 if(playerScore >= lastScore){
     $.ajax({
         method: "POST",
@@ -184,9 +184,9 @@ if(playerScore >= lastScore){
 }else {
     console.log(`didn't beat score`);
 }
-};
+}
 
-function t(){
+const t=()=>{
     switch(q){
         case 0: 
         loser();
@@ -219,9 +219,9 @@ function t(){
         winner();
         break;
     }
-};
+}
 
-function f(){
+const f=()=>{
     switch(q){
         case 0: 
         winner();
@@ -254,9 +254,9 @@ function f(){
         loser();
         break;
      }
-};
+}
 
-function questionHolder(q){
+const questionHolder=(q)=>{
      switch (q) {
         case 0:
          qTitle.style.display = "block";
@@ -349,6 +349,6 @@ function questionHolder(q){
          fbutton.addEventListener("click",f, false); 
          break; 
     }
-};
+}
 
-});
+})
